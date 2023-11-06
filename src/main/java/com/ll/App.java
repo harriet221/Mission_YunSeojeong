@@ -1,5 +1,10 @@
 package com.ll;
 
+import javax.imageio.IIOException;
+import java.io.BufferedWriter;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -8,11 +13,13 @@ public class App {
     Scanner sc;
     int lastId;
     List<Quotation> quotationList;
+    String fileName;
 
     App() {
         sc = new Scanner(System.in);
         lastId = 0;
         quotationList = new ArrayList<>();
+        fileName = "data.txt";
     }
 
     void run() {
@@ -24,6 +31,7 @@ public class App {
 
             switch (rq.getAction()) {
                 case "종료":
+                    actionSave();
                     return;
                 case "등록":
                     actionWrite();
@@ -129,5 +137,19 @@ public class App {
         quote.setAuthor(sc.nextLine());
 
         System.out.printf("%d번 명언이 수정되었습니다.\n", id);
+    }
+
+    void actionSave() {
+        try {
+            BufferedWriter writer = new BufferedWriter(new FileWriter(fileName));
+            for (int i=0; i<quotationList.size(); i++) {
+                Quotation quote = quotationList.get(i);
+                String quotation = String.format("%d,%s,%s\n", quote.getId(), quote.getAuthor(), quote.getContent());
+                writer.write(quotation);
+            }
+            writer.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
