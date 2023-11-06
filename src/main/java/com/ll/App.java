@@ -72,6 +72,23 @@ public class App {
     }
 
     void actionRemove(Rq rq) {
+        int id = rq.getParamId("id", 0);
 
+        if(id == 0) {
+            System.out.println("id를 정확히 적어주세요");
+            return;
+        }
+
+        int index = 0;
+
+        for(int i=0; i<quotationList.size(); i++) {
+            Quotation quote = quotationList.get(i);
+            if(id == quote.getId()) {
+                index = i;
+            }
+        }
+
+        quotationList.remove(index);
+        System.out.printf("%d번 명언이 삭제되었습니다.\n", id);
     }
 }
