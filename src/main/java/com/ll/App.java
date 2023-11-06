@@ -88,6 +88,7 @@ public class App {
         for (int i = quotationList.size() - 1; i >= 0; i--) {
             Quotation quote = quotationList.get(i);
             System.out.printf("%d / %s / %s\n", quote.getId(), quote.getAuthor(), quote.getContent());
+            lastId = quote.getId();
         }
     }
 
@@ -169,7 +170,7 @@ public class App {
             while ((quotation = reader.readLine()) != null) {
                 String[] quotationBits = quotation.split(",", 3);
                 int id = Integer.parseInt(quotationBits[0].trim());
-                lastId++;
+                lastId = id;
                 String author = quotationBits[1].trim();
                 String content = quotationBits[2].trim();
 
@@ -184,7 +185,7 @@ public class App {
 
     void actionBuild(){
         try {
-            FileWriter fileWriter = new FileWriter("data.json", true);
+            FileWriter fileWriter = new FileWriter("data.json");
             for(int i=0; i<quotationList.size(); i++) {
                 Quotation quote = quotationList.get(i);
 
@@ -193,9 +194,6 @@ public class App {
                 fileWriter.write(jsonData);
             }
 
-            // JSON 데이터를 파일에 저장 / 덮어쓰기
-            // FileWriter fileWriter = new FileWriter("data.json", true);
-            // fileWriter.write(jsonData);
             fileWriter.close();
 
             System.out.println("data.json 파일의 내용이 갱신되었습니다.");
