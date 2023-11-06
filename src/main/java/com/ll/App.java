@@ -1,14 +1,18 @@
 package com.ll;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class App {
     Scanner sc;
     int lastId;
+    List<Quotation> quotationList;
 
     App() {
         sc = new Scanner(System.in);
         lastId = 0;
+        quotationList = new ArrayList<>();
     }
 
     void run() {
@@ -40,6 +44,8 @@ public class App {
         lastId++;
         int id = lastId;
 
+        Quotation quote = new Quotation(id, content, author);
+        quotationList.add(quote);
         System.out.printf("%d번 명령이 등록되었습니다.\n", id);
     }
 }
