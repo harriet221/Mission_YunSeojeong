@@ -34,6 +34,9 @@ public class App {
                 case "삭제":
                     actionRemove(rq);
                     break;
+                case "수정":
+                    actionModify(rq);
+                    break;
                 default:
                     System.out.println("유효하지 않은 명령입니다.");
                     break;
@@ -100,4 +103,31 @@ public class App {
         System.out.printf("%d번 명언이 삭제되었습니다.\n", id);
     }
 
+    void actionModify(Rq rq) {
+        int id = rq.getParamId("id", 0);
+
+        if (id == 0) {
+            System.out.println("id를 정확히 적어주세요");
+            return;
+        }
+
+        int index = getIndexOfId(id);
+
+        if (index == -1) {
+            System.out.printf("%d번 명언은 존재하지 않습니다.\n", id);
+            return;
+        }
+
+        Quotation quote = quotationList.get(index);
+
+        System.out.printf("명언(기존) : %s\n", quote.getContent());
+        System.out.print("명언 : ");
+        quote.setContent(sc.nextLine());
+
+        System.out.printf("작가(기존) : %s\n", quote.getAuthor());
+        System.out.print("작가 : ");
+        quote.setAuthor(sc.nextLine());
+
+        System.out.printf("%d번 명언이 수정되었습니다.\n", id);
+    }
 }
