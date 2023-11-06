@@ -1,10 +1,7 @@
 package com.ll;
 
 import javax.imageio.IIOException;
-import java.io.BufferedWriter;
-import java.io.FileNotFoundException;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -23,6 +20,13 @@ public class App {
     }
 
     void run() {
+        try {
+            loadValueFromFile(fileName);
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("파일을 불러올 수 없습니다.");
+        }
+
         System.out.println("== 명언 앱 ==");
         while (true) {
             System.out.print("명령) ");
@@ -150,6 +154,26 @@ public class App {
             writer.close();
         } catch (IOException e) {
             throw new RuntimeException(e);
+        }
+    }
+
+    void loadValueFromFile(String fileName) {
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader(fileName));
+            String quotation = "";
+            while ((quotation = reader.readLine()) != null) {
+                String[] quotationBits = quotation.split(",", 3);
+                int id = Integer.parseInt(quotationBits[0].trim());
+                lastId++;
+                String author = quotationBits[1].trim();
+                String content = quotationBits[2].trim();
+
+                Quotation quote = new Quotation(id, content, author);
+                quotationList.add(quote);
+            }
+            reader.close();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }
