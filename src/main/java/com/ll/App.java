@@ -60,7 +60,7 @@ public class App {
         System.out.println("번호 / 작가 / 명언");
         System.out.println("----------------------");
 
-        if(quotationList.size() == 0) {
+        if (quotationList.size() == 0) {
             System.out.println("등록된 명언이 없습니다.");
             return;
         }
@@ -71,24 +71,27 @@ public class App {
         }
     }
 
+    int getIndexOfId(int id) {
+        for (int i = 0; i < quotationList.size(); i++) {
+            Quotation quote = quotationList.get(i);
+            if (id == quote.getId()) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
     void actionRemove(Rq rq) {
         int id = rq.getParamId("id", 0);
 
-        if(id == 0) {
+        if (id == 0) {
             System.out.println("id를 정확히 적어주세요");
             return;
         }
 
-        int index = 0;
+        int index = getIndexOfId(id);
 
-        for(int i=0; i<quotationList.size(); i++) {
-            Quotation quote = quotationList.get(i);
-            if(id == quote.getId()) {
-                index = i;
-            }
-        }
-
-        if(index == 0) {
+        if (index == -1) {
             System.out.printf("%d번 명언은 존재하지 않습니다.\n", id);
             return;
         }
@@ -96,4 +99,5 @@ public class App {
         quotationList.remove(index);
         System.out.printf("%d번 명언이 삭제되었습니다.\n", id);
     }
+
 }
