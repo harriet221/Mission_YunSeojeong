@@ -1,22 +1,24 @@
 package com.ll;
 
-import javax.imageio.IIOException;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class App {
     Scanner sc;
     int lastId;
     List<Quotation> quotationList;
     String fileName;
+    ObjectMapper objectMapper;
 
     App() {
         sc = new Scanner(System.in);
         lastId = 0;
         quotationList = new ArrayList<>();
         fileName = "data.txt";
+        objectMapper = new ObjectMapper();
     }
 
     void run() {
@@ -48,6 +50,9 @@ public class App {
                     break;
                 case "수정":
                     actionModify(rq);
+                    break;
+                case "빌드":
+                    actionBuild();
                     break;
                 default:
                     System.out.println("유효하지 않은 명령입니다.");
@@ -176,4 +181,27 @@ public class App {
             e.printStackTrace();
         }
     }
+
+    void actionBuild(){
+        try {
+            FileWriter fileWriter = new FileWriter("data.json", true);
+            for(int i=0; i<quotationList.size(); i++) {
+                Quotation quote = quotationList.get(i);
+
+                // 객체를 JSON 문자열로 변환
+                String jsonData = objectMapper.writeValueAsString(quote)+"\n";
+                fileWriter.write(jsonData);
+            }
+
+            // JSON 데이터를 파일에 저장 / 덮어쓰기
+            // FileWriter fileWriter = new FileWriter("data.json", true);
+            // fileWriter.write(jsonData);
+            fileWriter.close();
+
+            System.out.println("data.json 파일의 내용이 갱신되었습니다.");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 }
