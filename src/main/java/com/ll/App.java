@@ -20,8 +20,9 @@ public class App {
         while (true) {
             System.out.print("명령) ");
             String cmd = sc.nextLine();
+            Rq rq = new Rq(cmd);
 
-            switch (cmd) {
+            switch (rq.getAction()) {
                 case "종료":
                     return;
                 case "등록":
@@ -29,6 +30,9 @@ public class App {
                     break;
                 case "목록":
                     actionShow();
+                    break;
+                case "삭제":
+                    actionRemove(rq);
                     break;
                 default:
                     System.out.println("유효하지 않은 명령입니다.");
@@ -65,5 +69,9 @@ public class App {
             Quotation quote = quotationList.get(i);
             System.out.printf("%d / %s / %s\n", quote.getId(), quote.getAuthor(), quote.getContent());
         }
+    }
+
+    void actionRemove(Rq rq) {
+
     }
 }
