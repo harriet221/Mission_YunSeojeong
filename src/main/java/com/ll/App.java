@@ -55,9 +55,15 @@ public class App {
     void actionShow() {
         System.out.println("번호 / 작가 / 명언");
         System.out.println("----------------------");
+
+        if(quotationList.size() == 0) {
+            System.out.println("등록된 명언이 없습니다.");
+            return;
+        }
+
         for (int i = quotationList.size() - 1; i >= 0; i--) {
             Quotation quote = quotationList.get(i);
-            System.out.printf("%d / %s / %s", quote.getId(), quote.getAuthor(), quote.getContent());
+            System.out.printf("%d / %s / %s\n", quote.getId(), quote.getAuthor(), quote.getContent());
         }
     }
 }
