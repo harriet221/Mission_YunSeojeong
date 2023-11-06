@@ -73,7 +73,7 @@ public class App {
 
         Quotation quote = new Quotation(id, content, author);
         quotationList.add(quote);
-        System.out.printf("%d번 명령이 등록되었습니다.\n", id);
+        System.out.printf("%d번 명언이 등록되었습니다.\n", id);
     }
 
     void actionShow() {
