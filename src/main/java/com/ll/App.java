@@ -25,7 +25,7 @@ public class App {
         try {
             loadValueFromFile(fileName);
         } catch (Exception e) {
-            e.printStackTrace();
+            // e.printStackTrace();
             System.out.println("파일을 불러올 수 없습니다.");
         }
 
