@@ -88,7 +88,6 @@ public class App {
         for (int i = quotationList.size() - 1; i >= 0; i--) {
             Quotation quote = quotationList.get(i);
             System.out.printf("%d / %s / %s\n", quote.getId(), quote.getAuthor(), quote.getContent());
-            lastId = quote.getId();
         }
     }
 
@@ -170,7 +169,9 @@ public class App {
             while ((quotation = reader.readLine()) != null) {
                 String[] quotationBits = quotation.split(",", 3);
                 int id = Integer.parseInt(quotationBits[0].trim());
-                lastId = id;
+                if(id > lastId) {
+                    lastId = id;
+                }
                 String author = quotationBits[1].trim();
                 String content = quotationBits[2].trim();
 
