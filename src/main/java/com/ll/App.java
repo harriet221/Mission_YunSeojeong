@@ -162,26 +162,23 @@ public class App {
         }
     }
 
-    void loadValueFromFile(String fileName) {
-        try {
-            BufferedReader reader = new BufferedReader(new FileReader(fileName));
-            String quotation = "";
-            while ((quotation = reader.readLine()) != null) {
-                String[] quotationBits = quotation.split(",", 3);
-                int id = Integer.parseInt(quotationBits[0].trim());
-                if(id > lastId) {
-                    lastId = id;
-                }
-                String author = quotationBits[1].trim();
-                String content = quotationBits[2].trim();
-
-                Quotation quote = new Quotation(id, content, author);
-                quotationList.add(quote);
+    void loadValueFromFile(String fileName) throws Exception {
+        BufferedReader reader = new BufferedReader(new FileReader(fileName));
+        String quotation = "";
+        while ((quotation = reader.readLine()) != null) {
+            String[] quotationBits = quotation.split(",", 3);
+            int id = Integer.parseInt(quotationBits[0].trim());
+            if(id > lastId) {
+                lastId = id;
             }
-            reader.close();
-        } catch (IOException e) {
-            e.printStackTrace();
+            String author = quotationBits[1].trim();
+            String content = quotationBits[2].trim();
+
+            Quotation quote = new Quotation(id, content, author);
+            quotationList.add(quote);
         }
+        reader.close();
+
     }
 
     void actionBuild(){
