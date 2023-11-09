@@ -10,6 +10,17 @@ repositories {
 }
 
 dependencies {
+    // Lombok
+    implementation 'org.projectlombok:lombok:1.18.30'
+    annotationProcessor 'org.projectlombok:lombok:1.18.30'
+
+    // 테스트 환경에서도 롬복 사용
+    testImplementation 'org.projectlombok:lombok:1.18.30'
+    testAnnotationProcessor 'org.projectlombok:lombok:1.18.30'
+
+    // assertj
+    testImplementation 'org.assertj:assertj-core:3.24.2'
+
     // Jackson
     implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.13.1'
 
