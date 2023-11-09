@@ -8,7 +8,7 @@ public class Rq {
     private String action;
     private Map<String, String> paramMap;
 
-    Rq(String cmd) {
+    public Rq(String cmd) {
         paramMap = new HashMap<>();
         this.cmd = cmd;
 
@@ -30,11 +30,11 @@ public class Rq {
         }
     }
 
-    String getAction() {
+    public String getAction() {
         return action;
     }
 
-    int getParamId(String paramName, int defaultValue) {
+    public int getParamId(String paramName, int defaultValue) {
         try {
             return Integer.parseInt(paramMap.get(paramName));
         } catch(NumberFormatException e) {
