@@ -1,19 +1,20 @@
 package com.ll;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class App {
-    public Scanner sc;
-    private int lastId;
-    private List<Quotation> quotationList;
-    public String fileName;
-    private ObjectMapper objectMapper;
+    Scanner sc;
+    int lastId;
+    List<Quotation> quotationList;
+    String fileName;
+    ObjectMapper objectMapper;
 
-    public App() {
+    App() {
         sc = new Scanner(System.in);
         lastId = 0;
         quotationList = new ArrayList<>();
@@ -21,7 +22,7 @@ public class App {
         objectMapper = new ObjectMapper();
     }
 
-    public void run() {
+    void run() {
         try {
             loadValueFromFile(fileName);
         } catch (Exception e) {
@@ -61,7 +62,7 @@ public class App {
         }
     }
 
-    private void actionWrite() {
+    void actionWrite() {
         System.out.print("명언 : ");
         String content = sc.nextLine();
 
@@ -76,7 +77,7 @@ public class App {
         System.out.printf("%d번 명언이 등록되었습니다.\n", id);
     }
 
-    private void actionShow() {
+    void actionShow() {
         System.out.println("번호 / 작가 / 명언");
         System.out.println("----------------------");
 
@@ -91,7 +92,7 @@ public class App {
         }
     }
 
-    private int getIndexOfId(int id) {
+    int getIndexOfId(int id) {
         for (int i = 0; i < quotationList.size(); i++) {
             Quotation quote = quotationList.get(i);
             if (id == quote.getId()) {
@@ -101,7 +102,7 @@ public class App {
         return -1;
     }
 
-    private void actionRemove(Rq rq) {
+    void actionRemove(Rq rq) {
         int id = rq.getParamId("id", 0);
 
         if (id == 0) {
@@ -120,7 +121,7 @@ public class App {
         System.out.printf("%d번 명언이 삭제되었습니다.\n", id);
     }
 
-    private void actionModify(Rq rq) {
+    void actionModify(Rq rq) {
         int id = rq.getParamId("id", 0);
 
         if (id == 0) {
@@ -148,7 +149,7 @@ public class App {
         System.out.printf("%d번 명언이 수정되었습니다.\n", id);
     }
 
-    private void actionSave() {
+    void actionSave() {
         try {
             BufferedWriter writer = new BufferedWriter(new FileWriter(fileName));
             for (int i=0; i<quotationList.size(); i++) {
@@ -162,26 +163,29 @@ public class App {
         }
     }
 
-    private void loadValueFromFile(String fileName) throws Exception {
-        BufferedReader reader = new BufferedReader(new FileReader(fileName));
-        String quotation = "";
-        while ((quotation = reader.readLine()) != null) {
-            String[] quotationBits = quotation.split(",", 3);
-            int id = Integer.parseInt(quotationBits[0].trim());
-            if(id > lastId) {
-                lastId = id;
+    void loadValueFromFile(String fileName) {
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader(fileName));
+            String quotation = "";
+            while ((quotation = reader.readLine()) != null) {
+                String[] quotationBits = quotation.split(",", 3);
+                int id = Integer.parseInt(quotationBits[0].trim());
+                if(id > lastId) {
+                    lastId = id;
+                }
+                String author = quotationBits[1].trim();
+                String content = quotationBits[2].trim();
+
+                Quotation quote = new Quotation(id, content, author);
+                quotationList.add(quote);
             }
-            String author = quotationBits[1].trim();
-            String content = quotationBits[2].trim();
-
-            Quotation quote = new Quotation(id, content, author);
-            quotationList.add(quote);
+            reader.close();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-        reader.close();
-
     }
 
-    private void actionBuild(){
+    void actionBuild(){
         try {
             FileWriter fileWriter = new FileWriter("data.json");
             for(int i=0; i<quotationList.size(); i++) {

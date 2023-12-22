@@ -57,7 +57,11 @@
 <br><br>
 
 - 수정
-  <br><br>
+  + 접근 지정자 붙이기
+  + loadValueFromFile 부분에 try catch 중복 필수적인지 체크
+  + JSON 빌드 관련 코멘트 반영
+    -> "objectMapper를 사용하면 리스트를 바로 json 형식으로 변환해줄 수 있다고 합니다. List, Map, Set 이런 컬렉션 타입을 다 처리할 수 있다고 합ㄴ니다."
+    <br><br>
 - 추가
   + id 순서에 대해, "정렬" 명령 수행 → 기존 명령 id 순서대로 정렬하는 기능
 <br><br>

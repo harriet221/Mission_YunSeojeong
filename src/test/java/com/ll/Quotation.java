@@ -1,9 +1,9 @@
 package com.ll;
 
 public class Quotation {
-    private int id;
-    private String content;
-    private String author;
+    int id;
+    String content;
+    String author;
 
     public Quotation(int id, String content, String author) {
         this.id = id;
